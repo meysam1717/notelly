@@ -59,7 +59,7 @@ class AuthLoginUseCase
     private function getOrCreateUserByTelegramId(): self
     {
         $user = $this->userService->getUserByTelegramId($this->telegramInitDataDto->getTelegramUserDto()->getId());
-        if (empty($this->user)){
+        if (empty($user)){
             $user = $this->userService->createUserByTelegramData($this->telegramInitDataDto->getTelegramUserDto());
         }
         $this->user = $user;
