@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthService
 {
-    
-    public function loginUser(User $user): bool
+
+    public function loginUser(User $user): void
     {
+        Auth::login($user);
     }
 }
