@@ -2,9 +2,11 @@
 
 namespace App\UseCases\Auth;
 
+use App\Constants\AppConstants;
 use App\DTOs\TelegramInitDataDto;
 use App\Models\User;
 use App\Services\AuthService;
+use App\Services\FolderService;
 use App\Services\UserService;
 use App\Traits\TelegramTrait;
 use Exception;
@@ -17,10 +19,12 @@ class AuthLoginUseCase
     private string $initData;
     private TelegramInitDataDto $telegramInitDataDto;
     private User $user;
+    private bool $userNotExists;
 
     public function __construct(
         private readonly UserService $userService,
         private readonly AuthService $authService,
+        private readonly FolderService $folderService,
     )
     {
     }
@@ -31,7 +35,9 @@ class AuthLoginUseCase
         try {
             return $this->isTelegramDataValid()
                 ->extractTelegramData()
-                ->getOrCreateUserByTelegramId()
+                ->getUserByTelegramId()
+                ->createUserByTelegramIdIfNotExists()
+                ->createDefaultFolderIfUserDoesNotExists()
                 ->loginUser();
         } catch (Exception $e) {
             return false;
@@ -56,13 +62,31 @@ class AuthLoginUseCase
        return $this;
     }
 
-    private function getOrCreateUserByTelegramId(): self
+    private function getUserByTelegramId(): self
     {
         $user = $this->userService->getUserByTelegramId($this->telegramInitDataDto->getTelegramUserDto()->getId());
-        if (empty($user)){
-            $user = $this->userService->createUserByTelegramData($this->telegramInitDataDto->getTelegramUserDto());
+        if(empty($user)){
+            $this->userNotExists = true;
+        }else{
+            $this->userNotExists = false;
+            $this->user = $user;
         }
-        $this->user = $user;
+        return $this;
+    }
+
+    private function createUserByTelegramIdIfNotExists(): self
+    {
+        if ($this->userNotExists){
+            $this->user = $this->userService->createUserByTelegramData($this->telegramInitDataDto->getTelegramUserDto());
+        }
+        return $this;
+    }
+
+    private function createDefaultFolderIfUserDoesNotExists(): self
+    {
+        if ($this->userNotExists){
+            $this->folderService->createFolder($this->user->getId(), AppConstants::DEFAULT_FOLDER_NAME);
+        }
         return $this;
     }
 
