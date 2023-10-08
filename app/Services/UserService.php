@@ -26,4 +26,9 @@ class UserService
         return $user;
     }
 
+    public function getUserById(int $userId): ?User
+    {
+        return User::query()->where('id', $userId)->first();
+    }
+
 }
