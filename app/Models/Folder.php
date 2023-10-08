@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property integer $id
@@ -16,6 +17,11 @@ class Folder extends Model
         'user_id',
         'name',
     ];
+
+    public function notes(): HasMany
+    {
+        return $this->hasMany(Note::class);
+    }
 
     public function getId(): int
     {
