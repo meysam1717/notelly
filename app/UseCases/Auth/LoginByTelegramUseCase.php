@@ -31,7 +31,7 @@ class LoginByTelegramUseCase
     }
 
     /**
-     * @throws ValidationException
+     * @throws Exception
      */
     public function execute(string $initData): bool
     {
@@ -45,7 +45,7 @@ class LoginByTelegramUseCase
     }
 
     /**
-     * @throws ValidationException
+     * @throws Exception
      */
     private function isTelegramDataValid(): self
     {
@@ -55,7 +55,7 @@ class LoginByTelegramUseCase
                 throw new Exception();
             }
         } catch (Exception $e) {
-            throw new ValidationException('Telegram data is not valid');
+            throw new Exception('Telegram data is not valid');
         }
         return $this;
     }
