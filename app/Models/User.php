@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -30,6 +31,12 @@ class User extends Authenticatable
     protected $casts= [
         'allows_write_to_pm' => 'boolean'
     ];
+
+
+    public function folders(): HasMany
+    {
+        return $this->hasMany(Folder::class);
+    }
 
     public function getId(): int
     {
