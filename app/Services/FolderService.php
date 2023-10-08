@@ -17,9 +17,9 @@ class FolderService
         return $folder;
     }
 
-    public function getUserFolders(User $user, $eagerLoads = []): Collection|null
+    public function getUserFoldersWithNotesCount(User $user): Collection|null
     {
-        return $user->folders()->with($eagerLoads)->get();
+        return $user->folders()->withCount('notes')->get();
     }
 
     public function getUserFoldersByName(User $user, string $name): Collection|null
