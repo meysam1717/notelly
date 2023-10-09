@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --mh-bg-opacity : 1;
+  --mh-bg-opacity-soft : 1;
+  --mh-background-color: 248, 250, 252;
+  --mh-card-color: 255, 255, 255;
+  --mh-typograph-header-color: 30, 41, 59;
+  --mh-typograph-sub-header-color: 71, 85, 105;
+  --mh-light-gray-color: 243,247,249;
+  --mh-dark-gray-color: 50,58,70;
+  --mh-light-slate-color: 255, 255, 255;
+  --mh-dark-slate-color: 30, 41, 59;
+  --mh-primary-color: 255, 138, 101;
+  --mh-success-color: 40, 167, 69 ;
+  --mh-info-color: 51 181 229;
+  --mh-warning-color: 255 187 51;
+  --mh-error-color: 254 78 78;
+  
+  
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --mh-background-color: 15, 23, 42;
+    --mh-card-color: 30, 41, 59;
+    --mh-typograph-header-color: 248, 250, 252;
+    --mh-typograph-sub-header-color: 148, 163, 184;
+    --mh-light-gray-color: 66,78,90;
+    --mh-dark-gray-color: 243,247,249;
+    --mh-light-slate-color: 30, 41, 59;
+    --mh-dark-slate-color: 255, 255, 255;
+  }
+}
+
+body {
+  background: rgb(var(--mh-background-color));
+}
+
+@layer components {
+  .badge {
+    @apply inline-flex items-center rounded-full px-1.5 py-0.5 text-xs font-medium;
+  }
+  .light-gray {
+    @apply bg-light-gray text-dark-gray;
+  }
+  .dark-gray {
+    @apply bg-dark-gray text-light-gray;
+  }
+
+  .light-slate {
+    @apply bg-light-slate text-dark-slate;
+  }
+  .dark-slate {
+    @apply bg-dark-slate text-light-slate;
+  }
+  h1 {
+    @apply text-2xl font-extrabold;
+  }
+  h2 {
+    @apply text-xl font-semibold;
+  }
+  h3 {
+    @apply text-lg font-bold;
+  }
+}

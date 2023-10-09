@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('notes', function (Blueprint $table) {
             $table->unsignedInteger('id')->autoIncrement();
-            $table->unsignedInteger('telegram_id');
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
-            $table->string('username')->nullable();
-            $table->string('language_code', 15)->nullable();
-            $table->boolean('allows_write_to_pm')->nullable();
+            $table->unsignedInteger('folder_id');
+            $table->string('title', 31);
+            $table->json('data');
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('notes');
     }
 };
