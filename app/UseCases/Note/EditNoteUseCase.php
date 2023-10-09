@@ -16,7 +16,7 @@ class EditNoteUseCase
     private int $folderId;
     private int $noteId;
     private string $title;
-    private ?string $data;
+    private mixed $data;
     private Folder $folder;
     private Note $note;
 
@@ -31,7 +31,7 @@ class EditNoteUseCase
     /**
      * @throws Exception
      */
-    public function execute(int $userId, int $folderId, int $noteId, string $title, ?string $data): Note
+    public function execute(int $userId, int $folderId, int $noteId, string $title, mixed $data): Note
     {
         $this->userId = $userId;
         $this->folderId = $folderId;

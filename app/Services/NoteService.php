@@ -19,17 +19,18 @@ class NoteService
         return Note::query()->where('id', $noteId)->first();
     }
 
-    public function createNote(Folder $folder, string $title, ?string $data): Note
+    public function createNote(Folder $folder, string $title, mixed $data): Note
     {
         $note = new Note();
         $note->setTitle($title)
             ->setData($data)
+            ->setFolderId($folder->id)
             ->save();
         $folder->notes()->save($note);
         return $note;
     }
 
-    public function editNote(Note $note, string $title, ?string $data): Note
+    public function editNote(Note $note, string $title, mixed $data): Note
     {
         $note->setTitle($title)
             ->setData($data)

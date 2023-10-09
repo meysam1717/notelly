@@ -15,7 +15,7 @@ class StoreNoteUseCase
     private int $userId;
     private int $folderId;
     private string $title;
-    private ?string $data;
+    private mixed $data;
     private Folder $folder;
 
     public function __construct(
@@ -29,7 +29,7 @@ class StoreNoteUseCase
     /**
      * @throws Exception
      */
-    public function execute(int $userId, int $folderId, string $title, ?string $data): Note
+    public function execute(int $userId, int $folderId, string $title, mixed $data): Note
     {
         $this->userId = $userId;
         $this->folderId = $folderId;
