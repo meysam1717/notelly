@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Collection;
 class FolderService
 {
 
+    public function getFolderById(int $folderId): ?Folder
+    {
+        return Folder::query()->where('id', $folderId)->first();
+    }
     public function createFolder(User $user, string $name): Folder
     {
         $folder = new Folder();
