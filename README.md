@@ -5,9 +5,6 @@ Notelly is a note-taking application built using Laravel and Livewire. It allows
 
 <img src="./notelly_folders_screen.jpeg" alt="Notelly folders screen" width="300">
 
-
-
-
 ## Installation
 
 Follow these steps to set up and run Notelly on your local development environment.
@@ -70,10 +67,16 @@ Compile the JavaScript assets:
 ./vendor/bin/sail npm run build
 ```
 
+## Authentication solution
 
+Because of Telegram doesn't save cookies we defined a middleware to authenticate
+user based on telegram initData object that received in javascript.
+```
+app/Http/Middleware/TelegramAuthMiddleware.php
+```
 
-### Contributing
+## Contributing
 If you'd like to contribute to this project, send your merge requests.
 
-### License
+## License
 This project is open-source and available under the MIT License.
