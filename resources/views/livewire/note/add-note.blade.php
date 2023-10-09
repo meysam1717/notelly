@@ -17,9 +17,12 @@
 
         function saveNote() {
             editor.save().then((outputData) => {
-                console.log(outputData);
                 Livewire.dispatch('save-new-note',{'note':outputData,'folderId':{{ request()->route('id') }}});
             });
         }
+
+        telegram.BackButton.onClick(function (event) {
+            window.location = "{{ route('note-list',['id'=>$folderId]) }}"
+        });
     </script>
 @endpush

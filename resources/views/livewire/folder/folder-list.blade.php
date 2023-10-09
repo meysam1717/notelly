@@ -3,7 +3,7 @@
         @foreach($folders as $folder)
             <div class="relative min-w-0 px-4 py-5 text-center rounded-md bg-card sm:px-6"
                  x-data="{ open: false, color: false }" @keydown.escape="open = false"
-                 @click.away="open = false" wire:ignore>
+                 @click.away="open = false" wire:key="FolderId-{{ $folder->id }}">
                 <button class="absolute right-3" @click="open = !open">
                     <x-bi-three-dots-vertical class="w-5 h-5 text-gray-400"/>
                     <div x-show="open" x-transition:enter="transition ease-out duration-100"

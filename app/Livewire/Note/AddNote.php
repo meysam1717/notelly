@@ -17,6 +17,8 @@ class AddNote extends Component
     #[Rule('required|min:2|max:30')]
     public string $title = '';
 
+    public int $folderId;
+
     public mixed $note;
 
 
@@ -25,6 +27,10 @@ class AddNote extends Component
         $this->storeNoteUseCase = $storeNoteUseCase;
     }
 
+    public function mount($id): void
+    {
+        $this->folderId = $id;
+    }
 
     /**
      * @throws Exception

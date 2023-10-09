@@ -12,5 +12,9 @@
                 Livewire.dispatch('save-new-folder');
             })
         });
+
+        telegram.BackButton.onClick(function (event) {
+            window.location = "{{ route('home') }}"
+        });
     </script>
 @endpush

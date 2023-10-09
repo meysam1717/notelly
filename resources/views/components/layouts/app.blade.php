@@ -12,14 +12,6 @@
         telegram.MainButton.textColor = "#ffffff";
         telegram.BackButton.isVisible = true;
         telegram.BackButton.show();
-        telegram.BackButton.onClick(function (event) {
-            telegram.MainButton.hide();
-            if (window.location.pathname === '/'){
-                telegram.close();
-            }else{
-                history.back();
-            }
-        })
         // telegram.isClosingConfirmationEnabled = true;
         // telegram.enableClosingConfirmation = true;
     </script>

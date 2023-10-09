@@ -23,5 +23,9 @@
                 Livewire.dispatch('update-note',{'note':outputData,'folderId':{{ $folderId}} ,'noteId':{{ $noteId }} });
             });
         }
+
+        telegram.BackButton.onClick(function (event) {
+            window.location = "{{ route('note-list',['id'=>$folderId]) }}"
+        });
     </script>
 @endpush

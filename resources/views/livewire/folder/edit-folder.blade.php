@@ -14,5 +14,9 @@
                 Livewire.dispatch('update-folder',{'folderId':"{{ request()->route('id')}}"});
             })
         });
+
+        telegram.BackButton.onClick(function (event) {
+            window.location = "{{ route('home') }}"
+        });
     </script>
 @endpush
