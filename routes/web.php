@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Middleware\TelegramAuthMiddleware;
+use App\Livewire\HomePage;
 use Illuminate\Support\Facades\Route;
+use Livewire\Livewire;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Livewire::setUpdateRoute(function ($handle) {
+    return Route::post('/livewire/update', $handle)->middleware([TelegramAuthMiddleware::class]);
 });
+
+
+Route::get('/', HomePage::class)->name('home');
