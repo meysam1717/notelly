@@ -8,6 +8,18 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         let telegram = window.Telegram.WebApp;
+        telegram.MainButton.color = "#ff8a65";
+        telegram.MainButton.textColor = "#ffffff";
+        telegram.BackButton.isVisible = true;
+        telegram.BackButton.show();
+        telegram.BackButton.onClick(function (event) {
+            telegram.MainButton.hide();
+            if (window.location.pathname === '/'){
+                telegram.close();
+            }else{
+                history.back();
+            }
+        })
         // telegram.isClosingConfirmationEnabled = true;
         // telegram.enableClosingConfirmation = true;
     </script>
@@ -21,16 +33,6 @@
 
 
 <script>
-    telegram.BackButton.isVisible = true;
-    telegram.BackButton.show();
-    telegram.BackButton.onClick(function (event) {
-        if (window.location.pathname === '/'){
-            telegram.close();
-        }else{
-            history.back();
-        }
-    })
-
     document.addEventListener('livewire:initialized', () => {
         Livewire.on('notify', (event) => {
             telegram.showAlert(event.message)
