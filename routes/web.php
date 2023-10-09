@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\TelegramAuthMiddleware;
 use App\Livewire\Folder\AddFolder;
+use App\Livewire\Folder\EditFolder;
 use App\Livewire\HomePage;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
@@ -25,3 +26,4 @@ Livewire::setUpdateRoute(function ($handle) {
 
 Route::get('/', HomePage::class)->name('home');
 Route::get('/add-folder', AddFolder::class)->name('add-folder');
+Route::get('/folder/{id}/edit', EditFolder::class)->name('edit-folder');
