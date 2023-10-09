@@ -1,24 +1,27 @@
 <?php
 
-namespace App\UseCases\Folder;
+namespace App\UseCases\Note;
 
 use App\Models\Folder;
-use App\Models\User;
+use App\Models\Note;
 use App\Services\FolderService;
+use App\Services\NoteService;
 use App\Services\UserService;
 use Exception;
 
-class EditFolderUseCase
+class StoreNoteUseCase
 {
 
     private int $userId;
     private int $folderId;
-    private string $name;
+    private string $title;
+    private ?string $data;
     private Folder $folder;
 
     public function __construct(
         private readonly UserService   $userService,
         private readonly FolderService $folderService,
+        private readonly NoteService $noteService,
     )
     {
     }
@@ -26,15 +29,16 @@ class EditFolderUseCase
     /**
      * @throws Exception
      */
-    public function execute(int $userId, int $folderId, string $name): Folder
+    public function execute(int $userId, int $folderId, string $title, ?string $data): Note
     {
         $this->userId = $userId;
         $this->folderId = $folderId;
-        $this->name = $name;
+        $this->title = $title;
+        $this->data = $data;
         return $this->checkUserExists()
             ->getFolder()
-            ->checkFolderIsFoUser()
-            ->editFolder();
+            ->checkFolderIsForUser()
+            ->storeNote();
     }
 
     /**
@@ -65,7 +69,7 @@ class EditFolderUseCase
     /**
      * @throws Exception
      */
-    private function checkFolderIsFoUser(): self
+    private function checkFolderIsForUser(): self
     {
         if ($this->folder->getUserId() !== $this->userId){
             throw new Exception("Folder not found");
@@ -73,9 +77,9 @@ class EditFolderUseCase
         return $this;
     }
 
-    private function editFolder(): Folder
+    private function storeNote(): Note
     {
-        return $this->folderService->editFolderById($this->folder, $this->name);
+        return $this->noteService->createNote($this->folder, $this->title, $this->data);
     }
 
 }

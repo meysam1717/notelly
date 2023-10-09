@@ -1,24 +1,27 @@
 <?php
 
-namespace App\UseCases\Folder;
+namespace App\UseCases\Note;
 
 use App\Models\Folder;
-use App\Models\User;
+use App\Models\Note;
 use App\Services\FolderService;
+use App\Services\NoteService;
 use App\Services\UserService;
 use Exception;
 
-class EditFolderUseCase
+class NoteInfoUseCase
 {
 
     private int $userId;
     private int $folderId;
-    private string $name;
+    private int $noteId;
     private Folder $folder;
+    private Note $note;
 
     public function __construct(
         private readonly UserService   $userService,
         private readonly FolderService $folderService,
+        private readonly NoteService $noteService,
     )
     {
     }
@@ -26,15 +29,16 @@ class EditFolderUseCase
     /**
      * @throws Exception
      */
-    public function execute(int $userId, int $folderId, string $name): Folder
+    public function execute(int $userId, int $folderId, int $noteId): Note
     {
         $this->userId = $userId;
         $this->folderId = $folderId;
-        $this->name = $name;
+        $this->noteId = $noteId;
         return $this->checkUserExists()
             ->getFolder()
-            ->checkFolderIsFoUser()
-            ->editFolder();
+            ->checkFolderIsForUser()
+            ->getNote()
+            ->checkNoteIsForFolder();
     }
 
     /**
@@ -65,7 +69,7 @@ class EditFolderUseCase
     /**
      * @throws Exception
      */
-    private function checkFolderIsFoUser(): self
+    private function checkFolderIsForUser(): self
     {
         if ($this->folder->getUserId() !== $this->userId){
             throw new Exception("Folder not found");
@@ -73,9 +77,28 @@ class EditFolderUseCase
         return $this;
     }
 
-    private function editFolder(): Folder
+    /**
+     * @throws Exception
+     */
+    private function getNote(): self
     {
-        return $this->folderService->editFolderById($this->folder, $this->name);
+        $note = $this->noteService->getNoteById($this->noteId);
+        if (!$note){
+            throw new Exception("Note not found");
+        }
+        $this->note = $note;
+        return $this;
     }
 
+
+    /**
+     * @throws Exception
+     */
+    private function checkNoteIsForFolder(): Note
+    {
+        if ($this->note->getFolderId() !== $this->folderId){
+            throw new Exception("Note not found");
+        }
+        return $this->note;
+    }
 }

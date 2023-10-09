@@ -1,24 +1,28 @@
 <?php
 
-namespace App\UseCases\Folder;
+namespace App\UseCases\Note;
 
 use App\Models\Folder;
 use App\Models\User;
 use App\Services\FolderService;
+use App\Services\NoteService;
 use App\Services\UserService;
 use Exception;
+use Illuminate\Support\Collection;
 
-class EditFolderUseCase
+class NoteListUseCase
 {
-
     private int $userId;
     private int $folderId;
-    private string $name;
+
     private Folder $folder;
+    private Collection $notes;
 
     public function __construct(
-        private readonly UserService   $userService,
+        private readonly UserService $userService,
         private readonly FolderService $folderService,
+        private readonly NoteService $noteService,
+
     )
     {
     }
@@ -26,15 +30,14 @@ class EditFolderUseCase
     /**
      * @throws Exception
      */
-    public function execute(int $userId, int $folderId, string $name): Folder
+    public function execute(int $userId, int $folderId): Collection
     {
         $this->userId = $userId;
         $this->folderId = $folderId;
-        $this->name = $name;
         return $this->checkUserExists()
             ->getFolder()
             ->checkFolderIsFoUser()
-            ->editFolder();
+            ->getNotes();
     }
 
     /**
@@ -43,22 +46,15 @@ class EditFolderUseCase
     private function checkUserExists(): self
     {
         $user = $this->userService->getUserById($this->userId);
-        if (!$user) {
+        if (!$user){
             throw new Exception("User not found");
         }
         return $this;
     }
 
-    /**
-     * @throws Exception
-     */
     private function getFolder(): self
     {
-        $folder = $this->folderService->getFolderById($this->folderId);
-        if (!$folder){
-            throw new Exception("Folder not found");
-        }
-        $this->folder = $folder;
+        $this->folder = $this->folderService->getFolderById($this->folderId);
         return $this;
     }
 
@@ -73,9 +69,9 @@ class EditFolderUseCase
         return $this;
     }
 
-    private function editFolder(): Folder
+    private function getNotes(): Collection
     {
-        return $this->folderService->editFolderById($this->folder, $this->name);
+        return $this->noteService->getNoteListByFolder($this->folder);
     }
 
 }
