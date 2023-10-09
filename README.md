@@ -1,4 +1,4 @@
-# Notelly - A Note-Taking Application
+# Notelly - A Telegram Mini App Note-Taking Application
 
 Notelly is a note-taking application built using Laravel and Livewire. It allows users to organize their notes into folders, with each folder containing multiple notes. Each note can have a title, description, and a checklist of items.
 
