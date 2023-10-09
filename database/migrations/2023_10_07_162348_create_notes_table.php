@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('notes', function (Blueprint $table) {
             $table->unsignedInteger('id')->autoIncrement();
             $table->unsignedInteger('folder_id');
+            $table->string('title', 31);
             $table->json('data');
             $table->timestamps();
         });
