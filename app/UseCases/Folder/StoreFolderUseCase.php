@@ -55,7 +55,7 @@ class StoreFolderUseCase
     private function checkFolderDuplicate(): self
     {
         $folders = $this->folderService->getUserFoldersByName($this->user, $this->name);
-        if (!empty($folders)){
+        if (count($folders) > 0){
             throw new Exception("Folder with name '{$this->name}' exists");
         }
         return $this;
