@@ -75,8 +75,7 @@ class EditFolderUseCase
 
     private function editFolder(): Folder
     {
-        $this->folder->setName($this->name)->save();
-        return $this->folder;
+        return $this->folderService->editFolderById($this->folder, $this->name);
     }
 
 }

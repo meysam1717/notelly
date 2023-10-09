@@ -30,4 +30,15 @@ class FolderService
     {
         return $user->folders()->where('name', $name)->get();
     }
+
+    public function editFolderById(Folder $folder, string $name): Folder
+    {
+        $folder->setName($name)->save();
+        return $folder;
+    }
+
+    public function deleteFolder(Folder $folder): bool
+    {
+        return $folder->delete();
+    }
 }

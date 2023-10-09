@@ -73,7 +73,7 @@ class DeleteFolderUseCase
 
     private function deleteFolder(): bool
     {
-        return $this->folder->delete();
+        return $this->folderService->deleteFolder($this->folder);
     }
 
 }
