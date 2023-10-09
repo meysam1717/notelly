@@ -2,6 +2,12 @@
 
 Notelly is a note-taking application built using Laravel and Livewire. It allows users to organize their notes into folders, with each folder containing multiple notes. Each note can have a title, description, and a checklist of items.
 
+
+<img src="./notelly_folders_screen.jpeg" alt="Notelly folders screen" width="300">
+
+
+
+
 ## Installation
 
 Follow these steps to set up and run Notelly on your local development environment.
