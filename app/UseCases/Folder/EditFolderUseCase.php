@@ -8,11 +8,12 @@ use App\Services\FolderService;
 use App\Services\UserService;
 use Exception;
 
-class DeleteFolderUseCase
+class EditFolderUseCase
 {
 
     private int $userId;
     private int $folderId;
+    private string $name;
     private Folder $folder;
 
     public function __construct(
@@ -25,14 +26,15 @@ class DeleteFolderUseCase
     /**
      * @throws Exception
      */
-    public function execute(int $userId, int $folderId): bool
+    public function execute(int $userId, int $folderId, string $name): Folder
     {
         $this->userId = $userId;
         $this->folderId = $folderId;
+        $this->name = $name;
         return $this->checkUserExists()
             ->getFolder()
             ->checkFolderIsFoUser()
-            ->deleteFolder();
+            ->editFolder();
     }
 
     /**
@@ -71,9 +73,10 @@ class DeleteFolderUseCase
         return $this;
     }
 
-    private function deleteFolder(): bool
+    private function editFolder(): Folder
     {
-        return $this->folder->delete();
+        $this->folder->setName($this->name)->save();
+        return $this->folder;
     }
 
 }
