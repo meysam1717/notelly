@@ -60,7 +60,7 @@
         });
 
         function deleteFolder(id, folderName) {
-            telegram.showConfirm('Are you sure delete ' + folderName + ' folder', function (params) {
+            telegram.showConfirm('Are you sure delete folder ' + folderName, function (params) {
                 if (params) {
                     Livewire.dispatch('delete-folder', {'id': id});
                 }
