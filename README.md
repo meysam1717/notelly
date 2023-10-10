@@ -5,6 +5,10 @@ Notelly is a note-taking application built using Laravel and Livewire. It allows
 
 <img src="./notelly_folders_screen.jpeg" alt="Notelly folders screen" width="300">
 
+
+### Demo Application
+[Notelly in Telegram](https://t.me/notelly_bot)
+
 ## Installation
 
 Follow these steps to set up and run Notelly on your local development environment.
